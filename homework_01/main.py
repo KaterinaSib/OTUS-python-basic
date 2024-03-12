@@ -23,13 +23,15 @@ PRIME = "prime"
 def is_prime(number):
     if 1 < number < 4:
         return True
-    else:
+    elif number > 3:
         for n in range(2, number):
             if number % n == 0:
                 return False
             else:
                 n += 1
-    return True
+        return True
+    else:
+        return False
 
 
 def filter_numbers(num_list, filter_types):
