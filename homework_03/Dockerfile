@@ -1,4 +1,4 @@
-FROM python:3.12.2-bookworm
+FROM python:3.12-bullseye
 
 ENV PYTHONUNBUFFERED=1
 
@@ -12,5 +12,4 @@ RUN poetry install --only main
 
 COPY my_new_app ./
 
-#CMD ["uvicorn", "app:app", "--host", "localhost", "--port", "8000"]
-CMD ["uvicorn", "app:app"]
+CMD ["uvicorn", "app:app", "--host", "localhost", "--port", "8000"]
