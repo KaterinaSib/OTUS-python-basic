@@ -12,4 +12,6 @@ RUN poetry install --only main
 
 COPY my_new_app ./
 
-CMD ["uvicorn", "app:app", "--host", "localhost", "--port", "8000"]
+EXPOSE 8000
+
+CMD ["uvicorn", "app:app", "--host", "localhost"]
