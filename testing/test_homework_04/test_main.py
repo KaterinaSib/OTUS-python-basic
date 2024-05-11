@@ -1,3 +1,5 @@
+import asyncio
+
 import pytest
 
 # import homework package and skip the whole test if not available
@@ -56,7 +58,7 @@ async def test_main(users_data, posts_data):
     await module_main.async_main()
 
     stmt_query_users = select(module_models.User).options(selectinload(module_models.User.posts))
-    stmt_query_posts = select(module_models.Post).options(joinedload(module_models.Post.user))
+    stmt_query_posts = select(module_models.Post).options(joinedload(module_models.Post.author))
 
     users = []
     posts = []
@@ -88,5 +90,5 @@ async def test_main(users_data, posts_data):
 
     for post in posts:
         # check relationships
-        assert post.user in users
-        assert post in post.user.posts
+        assert post.author in users
+        assert post in post.author.posts
