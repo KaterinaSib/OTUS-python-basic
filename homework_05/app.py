@@ -13,21 +13,18 @@
 
 from flask import (
     Flask,
-    request,
     render_template,
 )
 
+from views.about import app_about
+
 app = Flask(__name__, template_folder="templates")
+app.register_blueprint(app_about)
 
 
-@app.route("/", endpoint="index.html")
+@app.route("/", endpoint="index")
 def index():
     return render_template("index.html")
-
-
-@app.route("/about/", endpoint="about.html")
-def about():
-    return render_template("about.html")
 
 
 if __name__ == "__main__":
