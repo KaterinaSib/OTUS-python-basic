@@ -3,7 +3,7 @@ from flask import Blueprint, render_template
 app_about = Blueprint(
     "app_about",
     __name__,
-    url_prefix="/about/",
+    url_prefix="/",
 )
 
 
