@@ -1,0 +1,30 @@
+{% extends 'products/base.html' %}
+
+
+{% block title %}
+  Product #{{ product.id }}
+{% endblock %}
+
+{% block main %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="my-3 alert alert-{{ 'primary' if category == 'message' else category }}" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endwith %}
+  <h1>Product #{{ product.id }} details</h1>
+  <div>
+    <strong>Name:</strong> {{ product.name }}
+  </div>
+  <div>
+    <strong>Price:</strong> {{ product.price }}
+  </div>
+<div class="my-3">
+    <a
+      class="btn btn-warning"
+      href="{{ url_for('products_app.delete', product_id=product.id) }}"
+    >Delete product</a>
+  </div>
+  {% include 'products/back-to-list.html' %}
+{% endblock %}
