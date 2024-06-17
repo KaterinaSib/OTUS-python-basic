@@ -13,9 +13,3 @@
 - в приложении есть возможность добавить записи, они сохраняются в БД
 - в приложении есть страница, которая выдаёт доступные записи (вытаскивает из БД)
 - Flask приложение настроено для запуска в production режиме (uwsgi, nginx, gunicorn) 
-
-
-<li><a class="dropdown-item" 
-href="{{  url_for('products_app.delete', product_id=product.id)  }}">
-Delete product</a>
-</li>
