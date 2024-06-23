@@ -18,10 +18,11 @@ from flask import (
 
 from flask_migrate import Migrate
 
-from my_app.models import db
+import config
+from models import db
 
-from my_app.views.about.about import app_about
-from my_app.views.products import products_app
+from views.about.about import app_about
+from views.products.views import products_app
 
 
 app = Flask(
@@ -31,8 +32,10 @@ app = Flask(
 
 app.config.update(
     SECRET_KEY="616b2180ee260174500b1042c648dff4fe3476137dd0c7b32792a9f8efb1c3b5",
-    SQLALCHEMY_DATABASE_URI="postgresql+psycopg2://user:example@localhost:5432/blog",
-    SQLALCHEMY_ECHO=True,
+    # SQLALCHEMY_DATABASE_URI="postgresql+psycopg://user:example@localhost:5432/blog",
+    SQLALCHEMY_DATABASE_URI=config.SQLALCHEMY_DATABASE_URI,
+    # SQLALCHEMY_ECHO=False,
+    SQLALCHEMY_ECHO=config.SQLALCHEMY_ECHO,
 )
 
 app.register_blueprint(app_about)

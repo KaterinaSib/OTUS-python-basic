@@ -8,8 +8,8 @@ RUN pip install --upgrade pip poetry==1.8.2
 
 RUN poetry config virtualenvs.create false --local
 COPY pyproject.toml poetry.lock ./
-RUN poetry install --only main
+RUN poetry install
 
-COPY ./prestart.sh ./prestart.sh
+COPY prestart.sh ./prestart.sh
 
 COPY my_app ./

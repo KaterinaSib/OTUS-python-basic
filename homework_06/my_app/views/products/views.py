@@ -12,7 +12,7 @@ from werkzeug.exceptions import (
 )
 
 from my_app.models import Product
-from .crud import products_storage as storage
+from my_app.views.products.crud import products_storage as storage
 
 products_app = Blueprint(
     "products_app",

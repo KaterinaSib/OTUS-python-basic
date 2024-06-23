@@ -9,7 +9,7 @@ Delete
 from random import randint
 from flask_sqlalchemy import SQLAlchemy
 
-from my_app.models import (
+from models import (
     db as main_sqla_db,
     Product,
 )
