@@ -1,5 +1,5 @@
 """
-URL configuration for water_metering project.
+URL configuration for zoo project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -14,14 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from meters.views import index_list_view
+from django.urls import path
+from . import views
+
+
+app_name = 'users'
 
 urlpatterns = [
-    path('', index_list_view, name='index'),
-    path('admin/', admin.site.urls),
-    path('users/', include('users.urls')),
-    path('meters/', include('meters.urls')),
-    path("__debug__/", include("debug_toolbar.urls")),
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('login/', views.AuthView.as_view(), name='login'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
 ]
