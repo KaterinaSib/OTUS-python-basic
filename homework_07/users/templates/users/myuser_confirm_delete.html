@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{object.name}}
+    {{object.username}}
 {% endblock %}
 
 {% block main %}
 
 <p class="m-3">Удалить?</p>
 
-<h1>{{object.name}}</h1>
-<h2>{{object.category}}</h2>
-<h3>{{object.address}}</h3>
-<h3>{{object.indication}}</h3>
+<h1>{{object.username}}</h1>
+<h2>{{object.first_name}}</h2>
+<h3>{{object.last_name}}</h3>
+<h3>{{object.email}}</h3>
 
 <form method="post">
     {% csrf_token %}
     <button type="submit">Да</button>
 </form>
 
-<a href="{% url 'meters:meter_list' %}">
+<a href="{% url 'users:list' %}">
     Назад
 </a>
 

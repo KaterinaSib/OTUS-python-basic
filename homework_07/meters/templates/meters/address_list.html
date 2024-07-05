@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Addresses list
+{% endblock %}
+
+{% block main %}
+
+<a class="link-info m-3" href="{% url 'meters:address_create' %}">Create</a>
+
+<ul>
+    {% for address in object_list %}
+    <li>
+        <a href="{% url 'meters:address_detail' pk=address.pk %}">
+            {{address}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -6,18 +6,17 @@
 
 {% block main %}
 
-<h1>{{object.name}}</h1>
 <h2>{{object.category}}</h2>
 <h3>{{object.address}}</h3>
 <h3>{{object.indication}}</h3>
 
-<a href="{% url 'meters:list' %}">
+<a href="{% url 'meters:meter_list' %}">
     Назад
 </a>
-<a href="{% url 'meters:update' pk=object.pk %}">
+<a href="{% url 'meters:meter_update' pk=object.pk %}">
     Изменить показания
 </a>
-<a href="{% url 'meters:delete' pk=object.pk %}">
+<a href="{% url 'meters:meter_delete' pk=object.pk %}">
     Удалить датчик
 </a>
 {% endblock %}

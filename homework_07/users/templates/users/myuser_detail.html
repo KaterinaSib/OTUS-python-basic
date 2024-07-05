@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{object.username}}
+{% endblock %}
+
+{% block main %}
+
+<h1>{{object.username}}</h1>
+<h2>{{object.first_name}}</h2>
+<h3>{{object.last_name}}</h3>
+<h3>{{object.email}}</h3>
+<h3>{{object.password}}</h3>
+
+<a href="{% url 'users:list' %}">
+    Назад
+</a>
+<a href="{% url 'users:update' pk=object.pk %}">
+    Изменить данные пользователя
+</a>
+<a href="{% url 'users:delete' pk=object.pk %}">
+    Удалить пользователя
+</a>
+{% endblock %}

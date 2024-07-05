@@ -6,12 +6,12 @@ Meters list
 
 {% block main %}
 
-<a class="link-info m-3" href="{% url 'meters:create' %}">Create</a>
+<a class="link-info m-3" href="{% url 'meters:meter_create' %}">Create</a>
 
 <ul>
     {% for meter in object_list %}
     <li>
-         <a href="{% url 'meters:detail' pk=meter.pk %}">
+         <a href="{% url 'meters:meter_detail' pk=meter.pk %}">
                 {{meter}}
          </a>
     </li>

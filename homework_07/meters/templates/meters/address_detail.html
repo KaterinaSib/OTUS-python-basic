@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{object.street}}/{{object.num_house}}/{{object.num_room}}
+{% endblock %}
+
+{% block main %}
+
+<h3> ул.{{object.street}}, д.{{object.num_house}}, кв.{{object.num_room}}</h3>
+
+
+
+<a href="{% url 'meters:address_list' %}">
+    Назад
+</a>
+<a href="{% url 'meters:address_update' pk=object.pk %}">
+    Изменить адрес
+</a>
+<a href="{% url 'meters:address_delete' pk=object.pk %}">
+    Удалить адрес
+</a>
+{% endblock %}

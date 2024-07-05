@@ -9,18 +9,9 @@ class Command(BaseCommand):
         MyUser.objects.all().delete()
 
         MyUser.objects.create(
-            name='Admin',
-            surname='Admin',
-            email='admin@mail.com',
-            username='AdminAdminovich',
-            password='Admin123qwerty!',
-            is_staff=True,
-        )
-
-        MyUser.objects.create(
-            name='Иван',
-            surname='Иванович',
+            username='IvanIvanov',
+            first_name='Иван',
+            last_name='Иванович',
             email='ivan@mail.com',
-            username='IvanIvanovich',
             password='Ivan123qwerty!',
         )

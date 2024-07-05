@@ -21,9 +21,14 @@ from . import views
 app_name = 'meters'
 
 urlpatterns = [
-    path('list/', views.MeterListView.as_view(), name='list'),
-    path('meter/<int:pk>/', views.MeterDetailView.as_view(), name='detail'),
-    path('create/', views.MeterCreateView.as_view(), name='create'),
-    path('update/<int:pk>/', views.MeterUpdateView.as_view(), name='update'),
-    path('delete/<int:pk>/', views.MeterDeleteView.as_view(), name='delete'),
+    path('list/', views.MeterListView.as_view(), name='meter_list'),
+    path('meter/<int:pk>/', views.MeterDetailView.as_view(), name='meter_detail'),
+    path('create/', views.MeterCreateView.as_view(), name='meter_create'),
+    path('update/<int:pk>/', views.MeterUpdateView.as_view(), name='meter_update'),
+    path('delete/<int:pk>/', views.MeterDeleteView.as_view(), name='meter_delete'),
+    path('addresses/list/', views.AddressListView.as_view(), name='address_list'),
+    path('addresses/<int:pk>/', views.AddressDetailView.as_view(), name='address_detail'),
+    path('addresses/create/', views.AddressCreateView.as_view(), name='address_create'),
+    path('addresses/update/<int:pk>/', views.AddressUpdateView.as_view(), name='address_update'),
+    path('addresses/delete/<int:pk>/', views.AddressDeleteView.as_view(), name='address_delete'),
 ]

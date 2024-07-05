@@ -9,16 +9,13 @@
 <p class="m-3">Удалить?</p>
 
 <h1>{{object.name}}</h1>
-<h2>{{object.category}}</h2>
-<h3>{{object.address}}</h3>
-<h3>{{object.indication}}</h3>
 
 <form method="post">
     {% csrf_token %}
     <button type="submit">Да</button>
 </form>
 
-<a href="{% url 'meters:meter_list' %}">
+<a href="{% url 'meters:address_list' %}">
     Назад
 </a>
 
