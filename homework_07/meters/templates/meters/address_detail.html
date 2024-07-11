@@ -8,7 +8,11 @@
 
 <h3> ул.{{object.street}}, д.{{object.num_house}}, кв.{{object.num_room}}</h3>
 
-
+<ul>
+    {% for meter in address.meter_set.all %}
+    <li>Счетчик: {{ meter.type }} - Показания: {{ meter.indication }}</li>
+    {% endfor %}
+</ul>
 
 <a href="{% url 'meters:address_list' %}">
     Назад

@@ -7,35 +7,8 @@ from .forms import MeterForm, AddressForm
 
 
 def index_list_view(request):
-    # meters = Meter.objects.select_related('meters').prefetch_related('category').all()
     return render(request, 'base.html')
 
-
-# def addresses_list_view(request):
-#     addresses = Address.objects.all()
-#     return render(
-#         request,
-#         'addresses/list.html',
-#         {'addresses': addresses},
-#     )
-
-
-# def categoryes_list_view(request):
-#     categoryes = Category.objects.all()
-#     return render(
-#         request,
-#         'categoryes/list.html',
-#         {'categoryes': categoryes},
-#     )
-
-
-# def meters_list_view(request):
-#     meters = Meter.objects.all()
-#     return render(
-#         request,
-#         'meters/list.html',
-#         {'meters': meters},
-#     )
 
 class AddressListView(ListView):
     model = Address
@@ -56,7 +29,7 @@ class AddressCreateView(UserPassesTestMixin, CreateView):
 
 
 class AddressUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = ["addresses.change_address"]  # view, add, change, delete
+    permission_required = ["addresses.change_address"]
     model = Address
     fields = '__all__'
     success_url = reverse_lazy('meters:address_list')
