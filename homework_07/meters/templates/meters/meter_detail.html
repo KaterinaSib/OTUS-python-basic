@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{object.name}}
+{% endblock %}
+
+{% block main %}
+
+<h2>{{object.category}}</h2>
+<h3>{{object.address}}</h3>
+<h3>{{object.indication}}</h3>
+
+<a href="{% url 'meters:meter_list' %}">
+    Назад
+</a>
+<a href="{% url 'meters:meter_update' pk=object.pk %}">
+    Изменить показания
+</a>
+<a href="{% url 'meters:meter_delete' pk=object.pk %}">
+    Удалить датчик
+</a>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+Users list
+{% endblock %}
+
+{% block main %}
+
+<a class="link-info m-3" href="{% url 'users:create' %}">Create</a>
+
+<ul>
+    {% for user in object_list %}
+    <li>
+         <a href="{% url 'users:detail' pk=user.pk %}">
+                {{user}}
+         </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

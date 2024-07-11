@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{object.name}}
+{% endblock %}
+
+{% block main %}
+
+<p class="m-3">Удалить?</p>
+
+<h1>{{object.name}}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Да</button>
+</form>
+
+<a href="{% url 'meters:address_list' %}">
+    Назад
+</a>
+
+{% endblock %}

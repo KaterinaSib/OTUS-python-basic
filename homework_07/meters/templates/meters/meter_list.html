@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+Meters list
+{% endblock %}
+
+{% block main %}
+
+<a class="link-info m-3" href="{% url 'meters:meter_create' %}">Create</a>
+
+<ul>
+    {% for meter in object_list %}
+    <li>
+         <a href="{% url 'meters:meter_detail' pk=meter.pk %}">
+                {{meter}}
+         </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
