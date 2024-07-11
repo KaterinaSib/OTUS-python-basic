@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'users',
     'meters',
+    'addresses',
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from meters.models import Address, Category, Meter
+from addresses.models import Address
+from meters.models import Category, Meter
 
 
 class Command(BaseCommand):

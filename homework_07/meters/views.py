@@ -2,42 +2,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, 
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Address, Category, Meter
-from .forms import MeterForm, AddressForm
+from .models import Meter
+from .forms import MeterForm
 
 
 def index_list_view(request):
     return render(request, 'base.html')
-
-
-class AddressListView(ListView):
-    model = Address
-
-
-class AddressDetailView(LoginRequiredMixin, DetailView):
-    model = Address
-
-
-class AddressCreateView(UserPassesTestMixin, CreateView):
-    model = Address
-    form_class = AddressForm
-    success_url = reverse_lazy('meters:address_list')
-
-    def test_func(self):
-        user = self.request.user
-        return self.request.user.is_staff or user.is_superuser
-
-
-class AddressUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = ["addresses.change_address"]
-    model = Address
-    fields = '__all__'
-    success_url = reverse_lazy('meters:address_list')
-
-
-class AddressDeleteView(DeleteView):
-    model = Address
-    success_url = reverse_lazy('meters:address_list')
 
 
 class MeterListView(ListView):

@@ -10,17 +10,17 @@
 
 <ul>
     {% for meter in address.meter_set.all %}
-    <li>Счетчик: {{ meter.type }} - Показания: {{ meter.indication }}</li>
+    <li>Счетчик: {{ meter.category }}/{{ meter.type }}/{{ meter.serial_num }} - Показания: {{ meter.indication }}</li>
     {% endfor %}
 </ul>
 
-<a href="{% url 'meters:address_list' %}">
+<a href="{% url 'addresses:address_list' %}">
     Назад
 </a>
-<a href="{% url 'meters:address_update' pk=object.pk %}">
+<a href="{% url 'addresses:address_update' pk=object.pk %}">
     Изменить адрес
 </a>
-<a href="{% url 'meters:address_delete' pk=object.pk %}">
+<a href="{% url 'addresses:address_delete' pk=object.pk %}">
     Удалить адрес
 </a>
 {% endblock %}
