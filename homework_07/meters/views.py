@@ -1,10 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from addresses.models import Address
 from .models import Meter, MeterData
 from .forms import MeterForm, MeterDataForm
 
@@ -40,9 +38,9 @@ class MeterCreateView(UserPassesTestMixin, CreateView):
 
 
 class MeterDataCreateView(LoginRequiredMixin, CreateView):
-    permission_required = ["meters.add_meterdata"]
     model = MeterData
     fields = ('data',)
+    permission_required = ["meters.add_meterdata"]
 
     def test_func(self):
         user = self.request.user
@@ -56,7 +54,7 @@ class MeterDataCreateView(LoginRequiredMixin, CreateView):
         instance = form.save(commit=False)
         instance.meter_id = self.kwargs['pk']
         instance.save()
-        return redirect('meters:meter_detail', pk=instance.meter_id)
+        return super().form_valid(form)
 
 
 class MeterUpdateView(PermissionRequiredMixin, UpdateView):

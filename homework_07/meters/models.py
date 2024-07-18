@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from addresses.models import Address
 
@@ -22,4 +23,7 @@ class Meter(models.Model):
 class MeterData(models.Model):
     meter = models.ForeignKey(Meter, on_delete=models.CASCADE)
     data = models.PositiveIntegerField(unique=False)
+    date_time = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.meter}: {self.data}'

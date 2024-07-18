@@ -1,3 +1,5 @@
+import datetime
+
 from django.core.management.base import BaseCommand
 from addresses.models import Address
 from meters.models import Category, Meter, MeterData

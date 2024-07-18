@@ -11,4 +11,4 @@ class MeterForm(forms.ModelForm):
 class MeterDataForm(forms.ModelForm):
     class Meta:
         model = MeterData
-        fields = '__all__'
+        fields = ('meter', 'data')
