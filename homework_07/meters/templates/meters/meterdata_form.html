@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block title %}
-New meter
+New meter_data{{pk}}
 {% endblock %}
 
 {% block main %}
+
+<span>Добавление данных для счётчика {{ object.address }}</span>
 
 <form class="form m-3" method="post">
     {% csrf_token %}

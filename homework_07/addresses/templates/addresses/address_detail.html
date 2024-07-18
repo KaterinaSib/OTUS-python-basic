@@ -10,10 +10,16 @@
 
 <ul>
     {% for meter in address.meter_set.all %}
-    <li>Счетчик: {{ meter.category }}/{{ meter.type }}/{{ meter.serial_num }} - Показания: {{ meter.indication }}</li>
+    <li>
+        <a href="{% url 'meters:meter_detail' pk=meter.pk %}">
+            {{meter}}
+        </a>
+    </li>
+
     {% endfor %}
 </ul>
 
+{% if user.is_staff or user.is_superuser %}
 <a href="{% url 'addresses:address_list' %}">
     Назад
 </a>
@@ -23,4 +29,9 @@
 <a href="{% url 'addresses:address_delete' pk=object.pk %}">
     Удалить адрес
 </a>
+{% else %}
+<a href="{% url 'users:detail' pk=user.pk %}">
+    User_detail
+</a>
+{% endif %}
 {% endblock %}

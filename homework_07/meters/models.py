@@ -14,7 +14,12 @@ class Meter(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     type = models.CharField(max_length=30)
     serial_num = models.PositiveIntegerField(unique=True)
-    indication = models.PositiveIntegerField()
 
     def __str__(self):
         return f'{self.category}/"{self.type}"/{self.serial_num}'
+
+
+class MeterData(models.Model):
+    meter = models.ForeignKey(Meter, on_delete=models.CASCADE)
+    data = models.PositiveIntegerField(unique=False)
+

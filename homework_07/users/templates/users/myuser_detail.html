@@ -1,17 +1,23 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{object.username}}
+{{object.username}}
 {% endblock %}
 
 {% block main %}
 
-<h1>{{object.username}}</h1>
-<h2>{{object.first_name}}</h2>
-<h3>{{object.last_name}}</h3>
-<h3>{{object.email}}</h3>
-<h3>{{object.password}}</h3>
+<h3>{{object.username}}</h3>
 
+{% for address in object.address_set.all %}
+    {{address}}
+        {% for meter in address.meter_set.all %}
+            <li><a href="{% url 'meters:meter_detail' pk=meter.pk %}">
+                {{meter}}</a>
+            </li>
+        {% endfor %}
+{% endfor %}
+
+{% if user.is_staff or user.is_superuser %}
 <a href="{% url 'users:list' %}">
     Назад
 </a>
@@ -21,4 +27,10 @@
 <a href="{% url 'users:delete' pk=object.pk %}">
     Удалить пользователя
 </a>
+{% else %}
+<form class="nav-item" method="post" action="{% url 'users:logout' %}">
+    {% csrf_token %}
+    <button class="btn" type="submit">Logout</button>
+</form>
+{% endif %}
 {% endblock %}

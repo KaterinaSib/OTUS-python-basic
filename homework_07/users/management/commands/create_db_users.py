@@ -13,11 +13,3 @@ class Command(BaseCommand):
             email='admin@mail.com',
             password='admin12345!',
         )
-
-        MyUser.objects.create(
-            username='IvanIvanov',
-            first_name='Иван',
-            last_name='Иванович',
-            email='ivan@mail.com',
-            password='Ivan123qwerty!',
-        )

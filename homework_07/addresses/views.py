@@ -5,8 +5,12 @@ from .models import Address
 from .forms import AddressForm
 
 
-class AddressListView(ListView):
+class AddressListView(UserPassesTestMixin, ListView):
     model = Address
+
+    def test_func(self):
+        user = self.request.user
+        return self.request.user.is_staff or user.is_superuser
 
 
 class AddressDetailView(LoginRequiredMixin, DetailView):
@@ -30,6 +34,10 @@ class AddressUpdateView(PermissionRequiredMixin, UpdateView):
     success_url = reverse_lazy('addresses:address_list')
 
 
-class AddressDeleteView(DeleteView):
+class AddressDeleteView(UserPassesTestMixin, DeleteView):
     model = Address
     success_url = reverse_lazy('addresses:address_list')
+
+    def test_func(self):
+        user = self.request.user
+        return self.request.user.is_staff or user.is_superuser
