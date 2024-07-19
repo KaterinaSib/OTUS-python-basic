@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'users',
     'meters',
+    'addresses',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,7 @@ AUTH_USER_MODEL = 'users.MyUser'
 LOGIN_URL = '/users/login/'
 LOGOUT_REDIRECT_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'
+
+DEBUG_TOOLBAR_CONFIG = {
+    'IS_RUNNING_TESTS': False,
+}

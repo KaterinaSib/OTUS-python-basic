@@ -8,14 +8,14 @@
 
 <p class="m-3">Удалить?</p>
 
-<h1>{{object.name}}</h1>
+<h4>{{object.name}}</h4>
 
 <form method="post">
     {% csrf_token %}
     <button type="submit">Да</button>
 </form>
 
-<a href="{% url 'meters:address_list' %}">
+<a href="{% url 'addresses:address_list' %}">
     Назад
 </a>
 

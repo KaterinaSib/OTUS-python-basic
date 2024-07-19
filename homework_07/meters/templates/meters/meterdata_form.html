@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block title %}
-    New address
+New meter_data{{pk}}
 {% endblock %}
 
 {% block main %}
+
+<span>Добавление данных для счётчика {{ object.address }}</span>
 
 <form class="form m-3" method="post">
     {% csrf_token %}
@@ -13,7 +15,5 @@
     <button class="btn btn-primary" type="submit">Сохранить</button>
 </form>
 
-<a href="{% url 'meters:address_list' %}">
-    Назад
-</a>
+<a href="{% url 'meters:meter_list' %}">Назад</a>
 {% endblock %}

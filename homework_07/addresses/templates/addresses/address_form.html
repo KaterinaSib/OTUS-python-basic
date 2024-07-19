@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-New meter
+    New address
 {% endblock %}
 
 {% block main %}
@@ -13,5 +13,7 @@ New meter
     <button class="btn btn-primary" type="submit">Сохранить</button>
 </form>
 
-<a href="{% url 'meters:meter_list' %}">Назад</a>
+<a href="{% url 'addresses:address_list' %}">
+    Назад
+</a>
 {% endblock %}

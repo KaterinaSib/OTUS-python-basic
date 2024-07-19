@@ -1,5 +1,8 @@
+import datetime
+
 from django.core.management.base import BaseCommand
-from meters.models import Address, Category, Meter
+from addresses.models import Address
+from meters.models import Category, Meter, MeterData
 
 
 class Command(BaseCommand):
@@ -35,7 +38,11 @@ class Command(BaseCommand):
             category=gvs,
             type='Тайпит',
             serial_num=45678,
-            indication=67,
+        )
+
+        data_meter_1 = MeterData.objects.create(
+            meter=meter_1,
+            data=65,
         )
 
         meter_2 = Meter.objects.create(
@@ -43,5 +50,9 @@ class Command(BaseCommand):
             category=hvs,
             type='Тайпит',
             serial_num=54321,
-            indication=23,
+        )
+
+        data_meter_2 = MeterData.objects.create(
+            meter=meter_2,
+            data=123,
         )

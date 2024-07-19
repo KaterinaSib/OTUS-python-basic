@@ -1,15 +1,6 @@
+from django.core.exceptions import ValidationError
 from django.db import models
-from users.models import MyUser
-
-
-class Address(models.Model):
-    street = models.CharField(unique=False, max_length=30)
-    num_house = models.CharField(unique=False, max_length=10)
-    num_room = models.PositiveSmallIntegerField()
-    user = models.ManyToManyField(MyUser)
-
-    def __str__(self):
-        return f'ул.{self.street}, д.{self.num_house}, кв.{self.num_room}'
+from addresses.models import Address
 
 
 class Category(models.Model):
@@ -24,7 +15,15 @@ class Meter(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     type = models.CharField(max_length=30)
     serial_num = models.PositiveIntegerField(unique=True)
-    indication = models.PositiveIntegerField()
 
     def __str__(self):
         return f'{self.category}/"{self.type}"/{self.serial_num}'
+
+
+class MeterData(models.Model):
+    meter = models.ForeignKey(Meter, on_delete=models.CASCADE)
+    data = models.PositiveIntegerField(unique=False)
+    date_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.meter}: {self.data}'

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Meter, Address
+from .models import Meter, MeterData
 
 
 class MeterForm(forms.ModelForm):
@@ -8,7 +8,7 @@ class MeterForm(forms.ModelForm):
         fields = '__all__'
 
 
-class AddressForm(forms.ModelForm):
+class MeterDataForm(forms.ModelForm):
     class Meta:
-        model = Address
-        fields = '__all__'
+        model = MeterData
+        fields = ('meter', 'data')

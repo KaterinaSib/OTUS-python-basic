@@ -19,20 +19,40 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item m-3">
-                        <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                        <a class="nav-link active" aria-current="page" href="{% url 'index' %}">
+                            Home
+                        </a>
                     </li>
                     <li class="nav-item m-3">
-                        <a class="nav-link active" href="{% url 'users:list' %}">Users List</a>
+                        <a class="nav-link
+                        {% if not user.is_staff %}
+                        disabled
+                        {% else %}
+                        active
+                        {% endif %}" href="{% url 'users:list' %}">Users List</a>
                     </li>
                     <li class="nav-item m-3">
-                        <a class="nav-link active" href="{% url 'meters:meter_list' %}">Meters List</a>
+                        <a class="nav-link
+                        {% if not user.is_staff %}
+                        disabled
+                        {% else %}
+                        active
+                        {% endif %}" href="{% url 'meters:meter_list' %}">Meters List</a>
                     </li>
                     <li class="nav-item m-3">
-                        <a class="nav-link active" href="{% url 'meters:address_list' %}">Addresses List</a>
+                        <a class="nav-link
+                        {% if not user.is_staff %}
+                        disabled
+                        {% else %}
+                        active
+                        {% endif %}" href="{% url 'addresses:address_list' %}">Addresses List</a>
                     </li>
+                    <div class="vr"></div>
                     {% if user.is_authenticated %}
                     <li class="nav-item m-3">
-                        <a class="nav-link active" href="#">Hello, {{user.username}}</a>
+                        <a class="nav-link active" href="{% url 'users:detail' pk=user.pk %}" >
+                            Hello, {{user.username}}
+                        </a>
                     </li>
                     <li class="nav-item m-3">
                         <form class="nav-item" method="post" action="{% url 'users:logout' %}">
@@ -58,7 +78,26 @@
 <div class="container">
     <div class="row">
         {% block main %}
-        <h1 class="m-3">Hello!</h1>
+        <h1 class="m-3">Проект "Meters"</h1>
+        <h3 class="m-3"> Это приложение для передачи и контроля показаний счетчиков
+            потребления энергоресурсов от потребителя поставщику.</h3>
+        {% if user.is_authenticated %}
+        {% else %}
+
+        <div class="m-3 fs-4 fw-semibold" style="display: inline;">
+            <span> Пожалуйста, пройдите авторизацию:</span>
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+               href="{% url 'users:login' %}">Login</a>
+        </div>
+        <div class="m-3">
+            <span>
+                Если у Вас нет логина и пароля для входа, то Вам необходимо отправить заявку на регистрацию нового
+                пользователя.
+            </span>
+            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+               href="#">Отправить заявку</a>
+        </div>
+        {% endif %}
         {% endblock %}
     </div>
 </div>
