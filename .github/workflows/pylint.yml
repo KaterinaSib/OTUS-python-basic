@@ -21,4 +21,4 @@ jobs:
         pip install pylint_django
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*homework_07/.py')
+        pylint $(git ls-files 'homework_07/*.py')
