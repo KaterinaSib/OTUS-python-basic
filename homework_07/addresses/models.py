@@ -9,4 +9,4 @@ class Address(models.Model):
     user = models.ManyToManyField(MyUser)
 
     def __str__(self):
-        return f'ул.{self.street}, д.{self.num_house}, кв.{self.num_room}'
+        return f"ул.{self.street}, д.{self.num_house}, кв.{self.num_room}"

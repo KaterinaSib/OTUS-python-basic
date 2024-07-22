@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.db import models
 from addresses.models import Address
 
@@ -26,4 +25,4 @@ class MeterData(models.Model):
     date_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.meter}: {self.data}'
+        return f"{self.meter}: {self.data}"

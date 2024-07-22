@@ -9,7 +9,7 @@ class Command(BaseCommand):
         MyUser.objects.all().delete()
 
         MyUser.objects.create_superuser(
-            username='admin',
-            email='admin@mail.com',
-            password='admin12345!',
+            username="admin",
+            email="admin@mail.com",
+            password="admin12345!",
         )

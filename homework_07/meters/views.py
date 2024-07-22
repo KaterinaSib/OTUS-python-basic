@@ -1,14 +1,24 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    PermissionRequiredMixin,
+)
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 
 from .models import Meter, MeterData
 from .forms import MeterForm, MeterDataForm
 
 
 def index_list_view(request):
-    return render(request, 'base.html')
+    return render(request, "base.html")
 
 
 class MeterListView(UserPassesTestMixin, ListView):
@@ -30,7 +40,7 @@ class MeterDetailView(UserPassesTestMixin, DetailView):
 class MeterCreateView(UserPassesTestMixin, CreateView):
     model = Meter
     form_class = MeterForm
-    success_url = reverse_lazy('meters:meter_list')
+    success_url = reverse_lazy("meters:meter_list")
 
     def test_func(self):
         user = self.request.user
@@ -39,7 +49,8 @@ class MeterCreateView(UserPassesTestMixin, CreateView):
 
 class MeterDataCreateView(LoginRequiredMixin, CreateView):
     model = MeterData
-    fields = ('data',)
+    form_class = MeterDataForm
+    fields = ("data",)
     permission_required = ["meters.add_meterdata"]
 
     def test_func(self):
@@ -48,11 +59,11 @@ class MeterDataCreateView(LoginRequiredMixin, CreateView):
         return user in address.user.all().first()
 
     def get_success_url(self):
-        return reverse('meters:meter_detail', kwargs={'pk': self.object.meter.pk})
+        return reverse("meters:meter_detail", kwargs={"pk": self.object.meter.pk})
 
     def form_valid(self, form):
         instance = form.save(commit=False)
-        instance.meter_id = self.kwargs['pk']
+        instance.meter_id = self.kwargs["pk"]
         instance.save()
         return super().form_valid(form)
 
@@ -60,13 +71,13 @@ class MeterDataCreateView(LoginRequiredMixin, CreateView):
 class MeterUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = ["meters.change_meter"]  # view, add, change, delete
     model = Meter
-    fields = ('indication',)
-    success_url = reverse_lazy('meters:meter_list')
+    fields = ("indication",)
+    success_url = reverse_lazy("meters:meter_list")
 
 
 class MeterDeleteView(UserPassesTestMixin, DeleteView):
     model = Meter
-    success_url = reverse_lazy('meters:meter_list')
+    success_url = reverse_lazy("meters:meter_list")
 
     def test_func(self):
         user = self.request.user
