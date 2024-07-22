@@ -1,0 +1,17 @@
+[MAIN]
+disable=
+    C0114,
+    C0115,
+    C0116,
+    R0901,
+
+[SIMILARITIES]
+# Minimum lines number of a similarity.
+min-similarity-lines=10
+
+[MASTER]
+init-hook='import os, sys; sys.path.append("src"); sys.path.append("src/apps");'
+ignore-paths=.*/migrations, .*/management/commands, manage.py
+load-plugins=pylint_django
+django-settings-module=homework_07.water_metering.settings
+max-line-length=120
