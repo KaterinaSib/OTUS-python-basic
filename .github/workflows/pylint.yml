@@ -21,4 +21,4 @@ jobs:
         pip install -r homework_07/dev_requirements.txt
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files 'homework_07/*.py')
+        pylint $(git ls-files '*.py')

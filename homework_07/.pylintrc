@@ -5,12 +5,11 @@ disable=
     C0116,
     R0901,
 
-[SIMILARITIES]
-# Minimum lines number of a similarity.
-min-similarity-lines=10
-
 [MASTER]
-ignore-paths=.*/migrations, .*/management/commands, manage.py
-load-plugins=pylint_django
 django-settings-module=water_metering.settings
+load-plugins=pylint_django
+ignore-paths=.*/migrations, .*/management/commands, manage.py
 max-line-length=120
+
+[SIMILARITIES]
+min-similarity-lines=10
