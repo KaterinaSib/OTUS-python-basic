@@ -24,7 +24,6 @@ class TestViews(TestCase):
         self.meter = Meter.objects.create(
             address=self.address,
             category=self.category,
-            indication=100,
             serial_num=12345,
         )
 
@@ -36,28 +35,30 @@ class TestViews(TestCase):
 
     def test_address_detail_view_for_auth_user(self):
         self.client.force_login(self.admin)
-        url = reverse("meters:address_detail", kwargs={"pk": self.address.pk})
+        url = reverse("addresses:address_detail", kwargs={"pk": self.address.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_address_detail_view_for_unauth_user(self):
-        url = reverse("meters:address_detail", kwargs={"pk": self.address.pk})
+        url = reverse("addresses:address_detail", kwargs={"pk": self.address.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
     def test_address_list_view(self):
-        url = reverse("meters:address_list")
+        self.client.force_login(self.admin)
+        url = reverse("addresses:address_list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_meter_list_view(self):
+        self.client.force_login(self.admin)
         url = reverse("meters:meter_list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_address_detail_view_context(self):
         self.client.force_login(self.admin)
-        url = reverse("meters:address_detail", kwargs={"pk": self.address.pk})
+        url = reverse("addresses:address_detail", kwargs={"pk": self.address.pk})
         response = self.client.get(url)
         print(response)
         self.assertContains(response, self.address.street)
@@ -68,9 +69,10 @@ class TestViews(TestCase):
         self.client.force_login(self.admin)
         url = reverse("meters:meter_detail", kwargs={"pk": self.meter.pk})
         response = self.client.get(url)
-        self.assertContains(response, self.meter.indication)
+        self.assertContains(response, self.meter.serial_num)
 
     def test_address_delete_view_context(self):
-        url = reverse("meters:address_delete", kwargs={"pk": self.address.pk})
+        self.client.force_login(self.admin)
+        url = reverse("addresses:address_delete", kwargs={"pk": self.address.pk})
         response = self.client.get(url)
         self.assertContains(response, "Удалить?", html=True)
