@@ -8,9 +8,11 @@ def client():
     try:
         app = module_app.app
     except AttributeError:
-        raise pytest.fail("skip testing homework_05 due to lack of Flask `app` in the `app.py`")
+        raise pytest.fail(
+            "skip testing homework_05 due to lack of Flask `app` in the `app.py`"
+        )
 
-    app.config['TESTING'] = True
+    app.config["TESTING"] = True
 
     with app.test_client() as client:
         # with app.app_context():
@@ -31,7 +33,7 @@ def test_visit_about(client):
 def test_nav_present(client):
     rv = client.get("/")
     assert b'<nav class="navbar' in rv.data
-    assert b'</nav>' in rv.data
+    assert b"</nav>" in rv.data
 
 
 def test_meta_viewport_present(client):

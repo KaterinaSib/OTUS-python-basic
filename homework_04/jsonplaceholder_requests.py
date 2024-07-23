@@ -29,5 +29,5 @@ async def main():
     log.info("Fetched json from posts_data (2): %s", task2.result())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

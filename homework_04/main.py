@@ -12,6 +12,7 @@
   (используйте полученные из запроса данные, передайте их в функцию для добавления в БД)
 - закрытие соединения с БД
 """
+
 import asyncio
 import logging
 
@@ -33,9 +34,9 @@ async def save_user_in_db(user_data):
     async with db_session() as session:
         async with session.begin():
             for user in user_data:
-                name = user['name']
-                username = user['username']
-                email = user['email']
+                name = user["name"]
+                username = user["username"]
+                email = user["email"]
                 user = User(name=name, username=username, email=email)
                 session.add(user)
             await session.commit()
@@ -45,9 +46,9 @@ async def save_post_in_db(post_data):
     async with db_session() as session:
         async with session.begin():
             for post in post_data:
-                user_id = post['userId']
-                title = post['title']
-                body = post['body']
+                user_id = post["userId"]
+                title = post["title"]
+                body = post["body"]
                 post = Post(user_id=user_id, title=title, body=body)
                 session.add(post)
             await session.commit()
@@ -57,8 +58,9 @@ async def async_main():
     configure_logging()
     await created_db_tables()
     log.info("drop and create all tables")
-    user_data, post_data = await asyncio.gather(fetch_json(USERS_DATA_URL),
-                                                fetch_json(POSTS_DATA_URL))
+    user_data, post_data = await asyncio.gather(
+        fetch_json(USERS_DATA_URL), fetch_json(POSTS_DATA_URL)
+    )
     log.info("user_data: %s", user_data)
     log.info("post_data: %s", post_data)
     await save_user_in_db(user_data)

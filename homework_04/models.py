@@ -20,8 +20,10 @@ from sqlalchemy import (
     Text,
 )
 
-PG_CONN_URI = (os.environ.get("SQLALCHEMY_PG_CONN_URI") or
-               "postgresql+asyncpg://user:example@localhost/blog")
+PG_CONN_URI = (
+    os.environ.get("SQLALCHEMY_PG_CONN_URI")
+    or "postgresql+asyncpg://user:example@localhost/blog"
+)
 
 async_engine = create_async_engine(PG_CONN_URI, echo=False)
 

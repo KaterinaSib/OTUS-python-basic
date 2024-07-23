@@ -6,6 +6,7 @@ Read
 Update
 Delete
 """
+
 from random import randint
 from flask_sqlalchemy import SQLAlchemy
 
