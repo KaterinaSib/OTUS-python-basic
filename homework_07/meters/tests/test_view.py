@@ -60,7 +60,6 @@ class TestViews(TestCase):
         self.client.force_login(self.admin)
         url = reverse("addresses:address_detail", kwargs={"pk": self.address.pk})
         response = self.client.get(url)
-        print(response)
         self.assertContains(response, self.address.street)
         self.assertContains(response, self.address.num_house)
         self.assertContains(response, self.address.num_room)

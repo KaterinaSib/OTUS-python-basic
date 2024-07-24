@@ -49,7 +49,7 @@ class MeterCreateView(UserPassesTestMixin, CreateView):
 
 class MeterDataCreateView(LoginRequiredMixin, CreateView):
     model = MeterData
-    form_class = MeterDataForm
+    # form_class = MeterDataForm
     fields = ("data",)
     permission_required = ["meters.add_meterdata"]
 
@@ -59,7 +59,9 @@ class MeterDataCreateView(LoginRequiredMixin, CreateView):
         return user in address.user.all().first()
 
     def get_success_url(self):
-        return reverse("meters:meter_detail", kwargs={"pk": self.object.meter.pk})
+        return reverse("meters:meter_detail",
+                       kwargs={"pk": self.object.meter.pk},
+                       )
 
     def form_valid(self, form):
         instance = form.save(commit=False)
@@ -69,16 +71,18 @@ class MeterDataCreateView(LoginRequiredMixin, CreateView):
 
 
 class MeterUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = ["meters.change_meter"]  # view, add, change, delete
+    permission_required = ["meters.change_meter"]
     model = Meter
-    fields = ("indication",)
+    fields = '__all__'
     success_url = reverse_lazy("meters:meter_list")
 
 
 class MeterDeleteView(UserPassesTestMixin, DeleteView):
     model = Meter
-    success_url = reverse_lazy("meters:meter_list")
 
     def test_func(self):
         user = self.request.user
         return self.request.user.is_staff or user.is_superuser
+
+    def get_success_url(self):
+        return reverse_lazy("meters:meter_list")

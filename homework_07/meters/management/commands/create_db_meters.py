@@ -1,26 +1,29 @@
 from django.core.management.base import BaseCommand
 from addresses.models import Address
 from meters.models import Category, Meter, MeterData
+from users.models import MyUser
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-
-        Address.objects.all().delete()
-        Category.objects.all().delete()
-        Meter.objects.all().delete()
-
+        admin = MyUser.objects.create_superuser(
+            username="admin",
+            email="admin@mail.com",
+            password="admin12345!",
+        )
         address_1 = Address.objects.create(
             street="Мира",
             num_house=2,
             num_room=15,
+            user=admin,
         )
 
         address_2 = Address.objects.create(
             street="Ленина",
             num_house=20,
             num_room=5,
+            user=admin,
         )
 
         gvs = Category.objects.create(

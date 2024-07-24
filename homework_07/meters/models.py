@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from addresses.models import Address
 
@@ -17,6 +18,14 @@ class Meter(models.Model):
 
     def __str__(self):
         return f'{self.category}/"{self.type}"/{self.serial_num}'
+
+    def clean_serial_num(self):
+        serial_num = self.cleaned_data.get('serial_num')
+        if Meter.objects.filter(serial_num=serial_num).exists():
+            raise ValidationError(
+                "Счетчик с этим серийным номером уже зарегистрирован."
+            )
+        return serial_num
 
 
 class MeterData(models.Model):
