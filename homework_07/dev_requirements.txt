@@ -1,3 +1,5 @@
 django-debug-toolbar==4.4.2
 pylint
 pylint_django==2.5.5
+pytest==7.4.4
+pytest-django==4.8.0
