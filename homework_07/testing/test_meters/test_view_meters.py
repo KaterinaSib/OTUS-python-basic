@@ -1,16 +1,14 @@
-from django.middleware.csrf import get_token
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse, reverse_lazy
 
 from addresses.models import Address
-from meters.models import Category, Meter, MeterData
+from meters.models import Category, Meter
 from users.models import MyUser
 
 
 class TestMeterView(TestCase):
 
     def setUp(self):
-        self.client = Client()
         self.user = MyUser.objects.create_user(
             username='testuser',
             email='user@mail.com',

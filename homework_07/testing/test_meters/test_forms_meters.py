@@ -1,8 +1,7 @@
 from django.test import TestCase
-
+from users.models import MyUser
 from addresses.models import Address
 from meters.forms import MeterForm, MeterDataForm
-from users.models import MyUser
 from meters.models import Category, Meter
 
 

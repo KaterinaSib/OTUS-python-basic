@@ -17,6 +17,7 @@ class TestViews(TestCase):
             street="Main Street",
             num_house=5,
             num_room=12,
+            user=self.admin,
         )
         self.category = Category.objects.create(
             name="ГВС",
@@ -26,12 +27,6 @@ class TestViews(TestCase):
             category=self.category,
             serial_num=12345,
         )
-
-    def tearDown(self):
-        self.admin.delete()
-        self.address.delete()
-        self.category.delete()
-        self.meter.delete()
 
     def test_address_detail_view_for_auth_user(self):
         self.client.force_login(self.admin)

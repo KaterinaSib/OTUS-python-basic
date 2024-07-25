@@ -14,7 +14,7 @@ from django.views.generic import (
 )
 
 from .models import Meter, MeterData
-from .forms import MeterForm, MeterDataForm
+from .forms import MeterForm
 
 
 def index_list_view(request):

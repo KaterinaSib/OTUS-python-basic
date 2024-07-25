@@ -1,50 +1,44 @@
-import pytest
+from django.test import TestCase
 from django.core.exceptions import ValidationError
+
+from meters.models import Category, Meter
 from users.models import MyUser
 from addresses.models import Address
 
 
-class TestAddressModel:
-    @pytest.fixture
-    def user(self, db):
-        return MyUser.objects.create(
+class TestAddressModel(TestCase):
+    def setUp(self):
+        self.user = MyUser.objects.create_user(
             username='testuser',
-            first_name='Test',
-            last_name='User',
-            email='testuser@example.com',
+            email='user@mail.com',
+            password='12345',
+        )
+        self.admin = MyUser.objects.create_superuser(
+            username='superuser',
+            email='admin@mail.com',
+            password='12345',
+            is_superuser=True,
         )
 
-    @pytest.fixture
-    def address(self, db, user):
-        address = Address.objects.create(
-            street='Main St',
-            num_house='123',
-            num_room=1,
+        self.address = Address.objects.create(
+            street='Test Street',
+            num_house=12,
+            num_room=8,
+            user=self.user,
         )
-        address.user.add(user)
-        return address
+        self.category = Category.objects.create(name='Test Category')
 
-    def test_address_str_method(self, address):
-        assert str(address) == "ул.Main St, д.123, кв.1"
+        self.meter = Meter.objects.create(
+            address=self.address,
+            category=self.category,
+            type='Test Type',
+            serial_num=123456,
+        )
 
-    def test_address_num_room_positive(self, db):
-        with pytest.raises(ValidationError):
+    def test_address_str_method(self):
+        self.assertEqual(str(self.address), "ул.Test Street, д.12, кв.8")
+
+    def test_address_num_room_positive(self):
+        with self.assertRaises(ValidationError):
             address = Address(street='Main St', num_house='123', num_room=-1)
-            address.full_clean()  # This will trigger the validation
-
-    def test_address_user_many_to_many(self, db, user):
-        address = Address.objects.create(
-            street='Main St',
-            num_house='123',
-            num_room=1,
-        )
-        user2 = MyUser.objects.create(
-            username='testuser2',
-            first_name='Test2',
-            last_name='User2',
-            email='testuser2@example.com',
-        )
-        address.user.add(user, user2)
-        assert address.user.count() == 2
-        assert user in address.user.all()
-        assert user2 in address.user.all()
+            address.full_clean()

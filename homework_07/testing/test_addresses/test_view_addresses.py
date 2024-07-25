@@ -1,8 +1,6 @@
 from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from addresses.views import AddressListView
-from addresses.models import Address
 from users.models import MyUser
 
 
@@ -37,7 +35,7 @@ class TestAddressListView(TestCase):
         request.user = self.user
         view = AddressListView.as_view()
         with self.assertRaises(PermissionDenied):
-            response = view(request)
+            view(request)
 
     def test_staff_user_access(self):
         request = self.factory.get('/addresses/')
