@@ -51,7 +51,6 @@ class TestUserView(TestCase):
             url,
             data=self.data,
         )
-        print(response.status_code)
         success_url = reverse("index")
         self.assertRedirects(response, success_url)
 
