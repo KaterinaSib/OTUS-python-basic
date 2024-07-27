@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import UserPassesTestMixin, PermissionRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import (
     ListView,
     DetailView,
@@ -8,7 +9,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from django.contrib.auth.views import LoginView, LogoutView
+
 from addresses.models import Address
 from .models import MyUser
 from .forms import RegisterForm
@@ -27,9 +28,12 @@ class AuthView(LoginView):
     def get_success_url(self):
         user = self.request.user
         if user.is_staff or user.is_superuser:
-            return reverse_lazy("index")
+            return reverse("index")
         address = get_object_or_404(Address, user=user)
-        return reverse("addresses:address_detail", kwargs={"pk": address.pk})
+        return reverse(
+            "addresses:address_detail",
+            kwargs={"pk": address.pk},
+        )
 
 
 class ReAuthView(LogoutView):

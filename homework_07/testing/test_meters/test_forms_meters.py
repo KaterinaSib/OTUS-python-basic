@@ -1,14 +1,14 @@
 from django.test import TestCase
+
 from users.models import MyUser
 from addresses.models import Address
 from meters.forms import MeterForm, MeterDataForm
 from meters.models import Category, Meter
 
 
-class TestMeterForm(TestCase):
-
+class TestSetupBase(TestCase):
     def setUp(self):
-        self.user = MyUser.objects.create(
+        self.admin = MyUser.objects.create(
             username='admin',
             is_superuser=True,
         )
@@ -16,7 +16,7 @@ class TestMeterForm(TestCase):
             street='Ленина',
             num_house=12,
             num_room=8,
-            user=self.user,
+            user=self.admin,
         )
         self.category = Category.objects.create(name='ГВС')
         self.meter = Meter.objects.create(
@@ -26,10 +26,12 @@ class TestMeterForm(TestCase):
             serial_num=12345,
         )
 
+
+class TestMeterForm(TestSetupBase):
     def test_form_initializes_with_all_fields(self):
         form = MeterForm()
-        self.assertEqual(list(
-            form.fields.keys()),
+        self.assertEqual(
+            list(form.fields.keys()),
             ['address', 'category', 'type', 'serial_num'],
         )
 
@@ -64,27 +66,7 @@ class TestMeterForm(TestCase):
         )
 
 
-class TestMeterDataForms(TestCase):
-
-    def setUp(self):
-        self.user = MyUser.objects.create(
-            username='admin',
-            is_superuser=True,
-        )
-        self.address = Address.objects.create(
-            street='Ленина',
-            num_house=12,
-            num_room=8,
-            user=self.user,
-        )
-        self.category = Category.objects.create(name='ГВС')
-        self.meter = Meter.objects.create(
-            address=self.address,
-            category=self.category,
-            type='Водомер',
-            serial_num=12345,
-        )
-
+class TestMeterDataForms(TestSetupBase):
     def test_form_initializes_with_valid_data(self):
         meter = self.meter
         form_data = {'meter': meter.id, 'data': 100}

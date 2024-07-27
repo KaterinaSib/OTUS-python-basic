@@ -9,30 +9,30 @@ from users.models import MyUser
 class TestMeterView(TestCase):
 
     def setUp(self):
+        self.admin = MyUser.objects.create(
+            username='admin',
+            email='admin@mail.com',
+            password='admin12345!',
+            is_superuser=True,
+        )
         self.user = MyUser.objects.create_user(
             username='testuser',
             email='user@mail.com',
             password='12345',
         )
-        self.admin = MyUser.objects.create_superuser(
-            username='superuser',
-            email='admin@mail.com',
-            password='12345',
-            is_superuser=True,
-        )
 
         self.address = Address.objects.create(
-            street='Test Street',
+            street='Ленина',
+            num_house=12,
             num_room=8,
-            user=self.user,
+            user=self.admin,
         )
-        self.category = Category.objects.create(name='Test Category')
-
+        self.category = Category.objects.create(name='ГВС')
         self.meter = Meter.objects.create(
             address=self.address,
             category=self.category,
-            type='Test Type',
-            serial_num=123456,
+            type='Водомер',
+            serial_num=12345,
         )
 
     def test_index_list_view(self):
@@ -70,46 +70,35 @@ class TestMeterView(TestCase):
         self.client.force_login(self.admin)
         url = reverse("meters:meter_update", kwargs={"pk": self.meter.pk})
         data = {
-            "address": self.address.pk,
-            "category": self.category.pk,
-            "type": "New Type",
+            "address": self.address.id,
+            "category": self.category.id,
+            "type": "Водомер",
             "serial_num": 67890,
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 302)
         self.meter.refresh_from_db()
-        self.assertEqual(self.meter.type, "New Type")
+        self.assertEqual(self.meter.type, "Водомер")
         self.assertEqual(self.meter.serial_num, 67890)
 
     def test_user_without_permissions_cannot_update_meter(self):
         self.client.force_login(self.user)
         url = reverse("meters:meter_update", kwargs={"pk": self.meter.pk})
         data = {
-            "address": self.address.pk,
-            "category": self.category.pk,
-            "type": "New Type",
+            "address": self.address.id,
+            "category": self.category.id,
+            "type": "Водомер",
             "serial_num": 67890,
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 403)
 
     def test_superuser_can_delete_meter(self):
-        address = Address.objects.create(
-            street='Test Street',
-            num_room=8,
-            user=self.admin,
-        )
-        meter = Meter.objects.create(
-            address=address,
-            category=self.category,
-            type='Test Type',
-            serial_num=7890,
-        )
         self.client.force_login(self.admin)
-        url = reverse("meters:meter_delete", kwargs={"pk": meter.pk})
+        url = reverse("meters:meter_delete", kwargs={"pk": self.meter.pk})
         success_url = reverse_lazy("meters:meter_list")
         response = self.client.post(url)
-        self.assertFalse(Meter.objects.filter(pk=meter.pk).exists())
+        self.assertFalse(Meter.objects.filter(pk=self.meter.pk).exists())
         self.assertRedirects(response, success_url)
 
     def test_regular_user_cannot_delete_meter(self):
