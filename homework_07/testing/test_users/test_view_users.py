@@ -67,4 +67,3 @@ class TestUserView(TestCase):
             kwargs={"pk": self.address.pk},
         )
         self.assertRedirects(response, success_url)
-
